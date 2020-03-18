@@ -1,0 +1,23 @@
+.header {
+    background-color: #500000 !important;
+    background-image: url('/img/jumbotron-background.png');
+    background-repeat: no-repeat;
+    background-size: 250px;
+    background-position: 80%;
+    color: #fff;
+}
+
+@media only screen and (max-width: 1024px) {
+    .header {
+        background-image: none;
+    }
+}
+
+.navbar-theme {
+   background-color: #500000 !important;
+   color: #000; 
+}
+
+.first-page-component {
+    margin-top: 56px;
+}

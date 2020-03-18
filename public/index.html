@@ -10,10 +10,31 @@
       content="The Brazos County COVID-19 Project"
     />
     <link rel="manifest" href="%PUBLIC_URL%/site.webmanifest" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
     <title>Brazos County COVID-19</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyBLHvGzdukqgERw9K3PBV2TATM_Zm0TY7s",
+        authDomain: "bccovid.firebaseapp.com",
+        databaseURL: "https://bccovid.firebaseio.com",
+        projectId: "bccovid",
+        storageBucket: "bccovid.appspot.com",
+        messagingSenderId: "634774436839",
+        appId: "1:634774436839:web:b9df834a6a5efc4bdc5b42"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
   </body>
 </html>

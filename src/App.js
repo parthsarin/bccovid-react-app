@@ -1,9 +1,19 @@
 import React from 'react';
 
+import Navigation from './Navigation';
+import Header from './Header';
+import Container from 'react-bootstrap/Container';
+
+import './App.css';
+
 function App() {
   return (
     <div className="App">
-      <h1>Hello World!</h1>
+      <Navigation />
+      <Header />
+      <Container>
+        <h1>Coming soon...</h1>
+      </Container>
     </div>
   );
 }
