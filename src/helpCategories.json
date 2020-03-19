@@ -1,0 +1,14 @@
+{
+    "students": {
+        "name": "Students",
+        "icon": "school"
+    },
+    "workers": {
+        "name": "Service Workers",
+        "icon": "storefront"
+    },
+    "anyone": {
+        "name": "Anyone",
+        "icon": "account_circle"
+    }
+}

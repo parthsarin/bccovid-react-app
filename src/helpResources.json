@@ -1,0 +1,20 @@
+[
+    {
+        "uuid": "3b7f8f00-93b0-43e9-be13-6b3f913a6e85",
+        "date": "2020-03-19",
+        "icon": "wifi",
+        "name": "Free Internet for 60 Days",
+        "provider": "Suddenlink",
+        "desc": "Suddenlink is offering 60 days of free internet service for families with students; this applies to K-12 and college students.",
+        "contact": "Call 888-633-0030 to enroll."
+    },
+    {
+        "uuid": "a0fe3529-141c-4ea3-8a4b-b80c85fd5f5c",
+        "date": "2020-03-15",
+        "icon": "restaurant",
+        "name": "Free Student Lunches",
+        "provider": "Bryan ISD and College Station ISD",
+        "desc": "Bryan ISD will provide free to-go lunches for students from 11 A.M. until 1 P.M. Monday through Friday at Bryan High School, Long Intermediate, Rayburn Intermediate and Kemp-Carver Elementary School. Students will also be given an additional bag for breakfast the following day.\n\nCollege Station ISD will offer a similar grab-and-go lunch for all children ages one through 18 at South Knoll Elementary, College Hills Elementary, Southwood Valley Elementary, River Bend Elementary and Oakwood Intermediate from 11 A.M. until 1 P.M. The program runs Monday through Friday. The meal will include a bag for breakfast for the following day.",
+        "contact": "See [this KBTX article](https://www.kbtx.com/content/news/Schools-offering-free-lunches-during-COVID-19-closures-568815831.html) for more details."
+    }
+]

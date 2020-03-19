@@ -2,7 +2,7 @@ import React from 'react';
 
 import Navigation from './Navigation';
 import Header from './Header';
-import Container from 'react-bootstrap/Container';
+import Help from './Help';
 
 import './App.css';
 
@@ -11,9 +11,7 @@ function App() {
     <div className="App">
       <Navigation />
       <Header />
-      <Container>
-        <h1>Coming soon...</h1>
-      </Container>
+      <Help />
     </div>
   );
 }
