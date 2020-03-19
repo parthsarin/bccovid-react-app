@@ -1,0 +1,18 @@
+{
+    "school": {
+        "name": "School",
+        "icon": "school"
+    },
+    "business": {
+        "name": "Business",
+        "icon": "business_center"
+    },
+    "disease": {
+        "name": "Disease",
+        "icon": "healing"
+    },
+    "government": {
+        "name": "Government Response",
+        "icon": "account_balance"
+    }
+}
