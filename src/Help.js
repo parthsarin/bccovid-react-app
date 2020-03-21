@@ -8,23 +8,91 @@ import Col from 'react-bootstrap/Col';
 import Collapse from 'react-bootstrap/Collapse';
 import ReactMarkdown from 'react-markdown';
 
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+
 import helpResources from './helpResources';
 
 export default class Help extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            individualResources: null
+        }
+    }
+
+    componentDidMount() {
+        var db = firebase.firestore();
+        this.getResources();
+
+        db.collection("resources").onSnapshot(function (querySnapshot) {
+            this.getResources();
+        }.bind(this));
+    }
+
+    async getResources() {
+        var db = firebase.firestore();
+
+        var individualResources = [];
+
+        await db.collection('resources').get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                const docData = {
+                    id: doc.id,
+                    ...doc.data()
+                };
+
+                individualResources.push(docData);
+            });
+        });
+
+        this.setState({individualResources});
+    }
+
     render() {
+        const user = this.props.user;
+        const signInButton = user ? null : (
+            <Card>
+              <Card.Body>
+                <Card.Title>Login to Add and Use Resources</Card.Title>
+                <Card.Text>
+                  Sign in to add your own resources and connect with others.
+                </Card.Text>
+                <Button
+                    onClick={this.props.signInGoogle}
+                    style={{textTransform: 'none'}}
+                    variant="outline-dark"
+                >
+                    <img 
+                        width="20px"
+                        id="google-logo"
+                        alt="Google sign-in" 
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" 
+                    />
+                    Login With Google
+                </Button>
+              </Card.Body>
+            </Card>
+        );
+
         return (
-            <Container className="help">
-                <h1>Get and Give Help</h1>
-                <h3 className="mt-3">Community-Wide Resources</h3>
-                <p className="lead">Resources open to the entire county, provided by institutions.</p>
-                <Row noGutters={true} className="community-resource-cards">
-                {
-                    helpResources.map((resource) => <CommunityResourceCard key={resource.uuid} resource={resource} />)
-                }
+            <div>
+                <Container className="help">
+                    <h1>Get and Give Help</h1>
+                    <h3 className="mt-3">Community-Wide Resources</h3>
+                    <p className="lead">Resources open to the entire county, provided by institutions.</p>
+                    <Row noGutters={true} className="community-resource-cards justify-content-between">
+                    {
+                        helpResources.map((resource) => <CommunityResourceCard key={resource.uuid} resource={resource} />)
+                    }
+                    </Row>
+                    <h3 className="mt-3">Individual Resources</h3>
+                    <p className="lead">Resources, small and large, provided by individuals.</p>
+                    { signInButton }
+                </Container>
+                <Row className="individual-resource-cards">
                 </Row>
-                <h3 className="mt-3">Individual Resources</h3>
-                <p className="lead">Resources, small and large, provided by individuals.</p>
-            </Container>
+            </div>
         );
     }
 }
@@ -44,12 +112,12 @@ class CommunityResourceCard extends React.Component {
         var icon = null;
         if (resource.icon !== undefined && resource.icon) {
             icon = (
-                <i className="small material-icons">{resource.icon}</i>
+                <i className="material-icons">{resource.icon}</i>
             )
         }
 
         return (
-            <Card as={Col} md={4} className="community-resource-card mr-2 h-100">
+            <Card as={Col} md={4} className="community-resource-card mb-1 h-100">
                 <Card.Body>
                     <Card.Title>{icon} { resource.name }</Card.Title>
                     <span>From <i className="provider">{ resource.provider }</i>.</span>

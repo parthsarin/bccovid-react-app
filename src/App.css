@@ -1,10 +1,14 @@
-.header {
+/* HEADER AND FOOTER */
+.header, .footer {
     background-color: #500000 !important;
+    color: #fff;
+}
+
+.header {
     background-image: url('/img/jumbotron-background.png');
     background-repeat: no-repeat;
     background-size: 250px;
     background-position: 80%;
-    color: #fff;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -13,11 +17,38 @@
     }
 }
 
+/* NAVBAR */
 .navbar-theme {
    background-color: #500000 !important;
    color: #000; 
 }
 
+/* COMPONENTS */
 .first-page-component {
     margin-top: 56px;
+}
+
+/* HELP */
+.individual-resource-cards {
+    flex-wrap: nowrap;
+}
+
+/* ICONS */
+.material-icons {
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+#google-logo {
+    margin-bottom: 3px; 
+    margin-right: 5px;
+}
+
+/* LINKS */
+a.maroon-link {
+    color: #00b3b3 !important;
+}
+
+a.maroon-link:hover, a.maroon-link:focus {
+    color: #006666 !important;
 }

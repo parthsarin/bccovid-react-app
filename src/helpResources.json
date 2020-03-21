@@ -1,5 +1,14 @@
 [
     {
+        "uuid": "",
+        "date": "2020-03-15",
+        "icon": "flight_takeoff",
+        "name": "Free Flights for Students",
+        "provider": "Frontier Airlines",
+        "desc": "For a limited time, students can now fly free on Frontier Airlines to nearly 100 destinations, making student travel easier and more affordable than ever! Purchase before March 23, 2020 and one student can fly free for every one-way or round-trip Discount Den Fare purchased on qualifying flights and dates. No advance purchase required - we're here to help urgent travel needs.",
+        "contact": "Promo Code: FLYFREE"
+    },
+    {
         "uuid": "3b7f8f00-93b0-43e9-be13-6b3f913a6e85",
         "date": "2020-03-19",
         "icon": "wifi",
