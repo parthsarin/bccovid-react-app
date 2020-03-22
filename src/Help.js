@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Collapse from 'react-bootstrap/Collapse';
+import Modal from 'react-bootstrap/Modal';
 import ReactMarkdown from 'react-markdown';
 
 import firebase from 'firebase/app';
@@ -16,6 +16,7 @@ import helpResources from './helpResources';
 export default class Help extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             individualResources: null
         }
@@ -102,7 +103,7 @@ class CommunityResourceCard extends React.Component {
         super(props);
 
         this.state = {
-            expanded: false
+            show: false
         }
     }
 
@@ -117,29 +118,45 @@ class CommunityResourceCard extends React.Component {
         }
 
         return (
-            <Card as={Col} md={4} className="community-resource-card mb-1 h-100">
-                <Card.Body>
-                    <Card.Title>{icon} { resource.name }</Card.Title>
-                    <span>From <i className="provider">{ resource.provider }</i>.</span>
-                    <div className="details">
-                        <Collapse appear={true} in={this.state.expanded}>
-                            <div id={"resource-desc-" + resource.uuid}>
-                                <ReactMarkdown source={resource.desc} />
-                                <i><ReactMarkdown source={resource.contact} /></i>
-                            </div>
-                        </Collapse>
-                        <Button
-                            onClick={() => this.setState({expanded: !this.state.expanded})}
-                            aria-controls={"resource-desc-" + resource.uuid}
-                            aria-expanded={this.state.expanded}
-                            variant="link"
-                            className="p-0"
-                        >
-                            {this.state.expanded ? 'Hide' : 'Show'} additional details.
-                        </Button>
-                    </div>
-                </Card.Body>
-            </Card>
+            <>
+                <Card as={Col} md={4} className="community-resource-card mb-1 h-100">
+                    <Card.Body>
+                        <Card.Title>{icon} { resource.name }</Card.Title>
+                        <span>From <i className="provider">{ resource.provider }</i>.</span>
+                        <div className="details">
+                            <Button
+                                onClick={() => this.setState({show: true})}
+                                aria-controls={"resource-desc-" + resource.uuid}
+                                aria-expanded={this.state.show}
+                                variant="link"
+                                className="p-0"
+                            >
+                                Show additional details.
+                            </Button>
+                        </div>
+                    </Card.Body>
+                </Card>
+                <Modal 
+                    show={this.state.show} 
+                    animation={true}
+                    aria-labelledby={"resource-desc-" + resource.uuid}
+                    onHide={() => this.setState({show: false})}
+                    centered
+                >
+                    <Modal.Header closeButton>
+                      <Modal.Title>{resource.name}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <ReactMarkdown source={resource.desc} />
+                        <i><ReactMarkdown source={resource.contact} /></i>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="danger" onClick={() => this.setState({show: false})}>
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+            </>
         )
     }
 }
