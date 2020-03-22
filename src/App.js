@@ -8,6 +8,9 @@ import Footer from './Footer';
 
 import './App.css';
 
+import Alert from 'react-bootstrap/Alert';
+import Container from 'react-bootstrap/Container';
+
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -70,13 +73,18 @@ export default class App extends React.Component {
 
     return (
       <div className="App">
-        <Navigation 
+        <Navigation
           user={user}
           signInGoogle={this.signInGoogle}
           signOut={this.signOut}
         />
         <Header />
-        <Help 
+        <Container>
+            <Alert variant='warning'>
+                Warning: This site is a work in progress! Many features have not yet been implemented yet.
+            </Alert>
+        </Container>
+        <Help
           user={user}
           signInGoogle={this.signInGoogle}
         />
