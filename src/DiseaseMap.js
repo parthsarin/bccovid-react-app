@@ -5,7 +5,7 @@ function DiseaseMap(props) {
     return (
     <>
         <Container> 
-            <h1 id="map" className="mt-2">COVID-19 Map</h1>
+            <h1 id="map" className="mt-4">COVID-19 Map</h1>
             <p className="lead">Made by Johns Hopkins University.</p>
         </Container>
         <iframe 
@@ -16,7 +16,7 @@ function DiseaseMap(props) {
             marginHeight="0" 
             marginWidth="0" 
             title="2019-nCoV" 
-            src="https://gisanddata.maps.arcgis.com/apps/Embed/index.html?webmap=14aa9e5660cf42b5b4b546dec6ceec7c&extent=77.3846,11.535,163.5174,52.8632&zoom=true&previewImage=false&scale=true&disable_scroll=true&theme=light"
+            src="https://gisanddata.maps.arcgis.com/apps/Embed/index.html?webmap=14aa9e5660cf42b5b4b546dec6ceec7c&extent=-140,11.535,-50,60&zoom=true&previewImage=false&scale=true&disable_scroll=true&theme=light"
         ></iframe>
     </>
     );

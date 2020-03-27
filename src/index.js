@@ -10,6 +10,11 @@ import 'firebase/auth';        // for authentication
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('UA-162069380-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
+
 var firebaseConfig = {
   apiKey: "AIzaSyBLHvGzdukqgERw9K3PBV2TATM_Zm0TY7s",
   authDomain: "bccovid.firebaseapp.com",

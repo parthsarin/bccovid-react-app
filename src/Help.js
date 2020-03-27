@@ -14,6 +14,7 @@ import 'firebase/firestore';
 import moment from 'moment';
 
 import helpCategories from './helpCategories.json';
+import HelpForm from './HelpForm';
 
 export default class Help extends React.Component {
     constructor(props) {
@@ -78,7 +79,12 @@ export default class Help extends React.Component {
 
     render() {
         const user = this.props.user;
-        const signInButton = user ? null : (
+        const signInButton = user ? 
+        (
+            <HelpForm
+                user={this.props.user}
+            />
+        ) : (
             <Card>
               <Card.Body>
                 <Card.Title>Login to Add Resources</Card.Title>
@@ -191,7 +197,6 @@ class CommunityResourceCard extends React.Component {
         }
 
         const date = moment(resource.date.toDate());
-        console.log(date);
 
         return (
             <>

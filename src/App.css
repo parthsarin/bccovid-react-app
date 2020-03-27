@@ -52,3 +52,8 @@ a.maroon-link {
 a.maroon-link:hover, a.maroon-link:focus {
     color: #006666 !important;
 }
+
+/* RAYS OF SUNSHINE */
+.sunshine-list p {
+    margin-bottom: 0;
+}

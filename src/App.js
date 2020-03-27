@@ -4,6 +4,7 @@ import Navigation from './Navigation';
 import Header from './Header';
 import Help from './Help';
 import DiseaseMap from './DiseaseMap';
+import Sunshine from './Sunshine';
 import Footer from './Footer';
 
 import './App.css';
@@ -89,6 +90,7 @@ export default class App extends React.Component {
           signInGoogle={this.signInGoogle}
         />
         <DiseaseMap />
+        <Sunshine />
         <Footer />
       </div>
     );
