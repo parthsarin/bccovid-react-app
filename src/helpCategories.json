@@ -1,14 +1,18 @@
 {
+    "anyone": {
+        "name": "Anyone",
+        "icon": "account_circle"
+    },
     "students": {
         "name": "Students",
         "icon": "school"
     },
     "workers": {
         "name": "Service Workers",
-        "icon": "storefront"
+        "icon": "fitness_center"
     },
-    "anyone": {
-        "name": "Anyone",
-        "icon": "account_circle"
+    "business": {
+        "name": "Small Businesses",
+        "icon": "store"
     }
 }

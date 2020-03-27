@@ -72,12 +72,6 @@ export default class Navigation extends React.Component {
                 </ScrollNavLink>
                 <ScrollNavLink 
                   onClick={() => this.setState({ expanded: false })} 
-                  target="news"
-                >
-                  News
-                </ScrollNavLink>
-                <ScrollNavLink 
-                  onClick={() => this.setState({ expanded: false })} 
                   target="guidelines"
                 >
                   Guidelines

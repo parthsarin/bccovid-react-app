@@ -11,14 +11,17 @@ import ReactMarkdown from 'react-markdown';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
-import helpResources from './helpResources';
+import moment from 'moment';
+
+import helpCategories from './helpCategories.json';
 
 export default class Help extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            individualResources: null
+            resources: null,
+            filter: ['anyone']
         }
     }
 
@@ -31,23 +34,46 @@ export default class Help extends React.Component {
         }.bind(this));
     }
 
+    sanitize(data) {
+        data.desc = data.desc.replace(/\\n/g, "\n");
+        return data
+    }
+
     async getResources() {
         var db = firebase.firestore();
 
-        var individualResources = [];
+        var resources = [];
 
         await db.collection('resources').get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 const docData = {
                     id: doc.id,
-                    ...doc.data()
+                    ...this.sanitize(doc.data())
                 };
 
-                individualResources.push(docData);
+                resources.push(docData);
             });
         });
 
-        this.setState({individualResources});
+        this.setState({resources});
+    }
+
+    addFilter(category) {
+        this.setState({ filter: [...this.state.filter, category] })
+    }
+
+    removeFilter(category) {
+        var arr = [...this.state.filter];
+        var index = arr.indexOf(category);
+        if (index !== -1) {
+            arr.splice(index, 1);
+            this.setState({ filter: arr });
+        }
+    }
+
+    shouldShowResource(resource) {
+        return (this.state.filter.includes('anyone') 
+                || this.state.filter.includes(resource.category));
     }
 
     render() {
@@ -55,9 +81,9 @@ export default class Help extends React.Component {
         const signInButton = user ? null : (
             <Card>
               <Card.Body>
-                <Card.Title>Login to Add and Use Resources</Card.Title>
+                <Card.Title>Login to Add Resources</Card.Title>
                 <Card.Text>
-                  Sign in to add your own resources and connect with others.
+                  Sign in to add your own resources.
                 </Card.Text>
                 <Button
                     onClick={this.props.signInGoogle}
@@ -76,27 +102,74 @@ export default class Help extends React.Component {
             </Card>
         );
 
+        var filterButtons = [];
+        for (const category in helpCategories) {
+            filterButtons.push(
+                <FilterButton
+                    key={category}
+                    category={helpCategories[category]}
+                    filter={this.state.filter.includes(category)}
+                    addFilter={() => this.addFilter(category)}
+                    removeFilter={() => this.removeFilter(category)}
+                />
+            );
+        }
+
         return (
             <div>
                 <Container className="help">
                     <h1>Get and Give Help</h1>
-                    <h3 className="mt-3">Community-Wide Resources</h3>
-                    <p className="lead">Resources open to the entire county, provided by institutions.</p>
+                    <p className="lead">Resources for the entire community.</p>
+                    <p className="text-muted">Filter resources based on target group:</p>
+                    <Row noGutters={true} className="filter-resources mb-2">
+                    { filterButtons }
+                    </Row>
                     <Row noGutters={true} className="community-resource-cards justify-content-between">
                     {
-                        helpResources.map((resource) => <CommunityResourceCard key={resource.uuid} resource={resource} />)
+                        this.state.resources ? 
+                        this.state.resources.map(
+                            (resource) => 
+                            this.shouldShowResource(resource) ? 
+                            <CommunityResourceCard 
+                                key={resource.id} 
+                                resource={resource} 
+                            /> : null
+                        ) : null
                     }
                     </Row>
-                    <h3 className="mt-3">Individual Resources</h3>
-                    <p className="lead">Resources, small and large, provided by individuals.</p>
                     { signInButton }
                 </Container>
-                <Row className="individual-resource-cards">
-                </Row>
             </div>
         );
     }
 }
+
+function FilterButton(props) {
+    var variant = 'outline-info';
+    if (props.filter) {
+        variant = 'info';
+    }
+
+    const targetFunc = props.filter ? props.removeFilter : props.addFilter;
+
+    var icon = null;
+    if (props.category.icon !== undefined && props.category.icon) {
+        icon = (
+            <i className="material-icons">{props.category.icon}</i>
+        )
+    }
+
+    return (
+        <Button 
+            className="mr-2"
+            variant={variant} 
+            onClick={targetFunc}
+        >
+            { icon } { props.category.name }
+        </Button>
+    );
+}
+
 
 class CommunityResourceCard extends React.Component {
     constructor(props) {
@@ -117,16 +190,19 @@ class CommunityResourceCard extends React.Component {
             )
         }
 
+        const date = moment(resource.date.toDate());
+        console.log(date);
+
         return (
             <>
-                <Card as={Col} md={4} className="community-resource-card mb-1 h-100">
+                <Card as={Col} md={4} className="community-resource-card mb-2 h-100">
                     <Card.Body>
                         <Card.Title>{icon} { resource.name }</Card.Title>
                         <span>From <i className="provider">{ resource.provider }</i>.</span>
                         <div className="details">
                             <Button
                                 onClick={() => this.setState({show: true})}
-                                aria-controls={"resource-desc-" + resource.uuid}
+                                aria-controls={"resource-desc-" + resource.id}
                                 aria-expanded={this.state.show}
                                 variant="link"
                                 className="p-0"
@@ -139,7 +215,7 @@ class CommunityResourceCard extends React.Component {
                 <Modal 
                     show={this.state.show} 
                     animation={true}
-                    aria-labelledby={"resource-desc-" + resource.uuid}
+                    aria-labelledby={"resource-desc-" + resource.id}
                     onHide={() => this.setState({show: false})}
                     centered
                 >
@@ -147,6 +223,7 @@ class CommunityResourceCard extends React.Component {
                       <Modal.Title>{resource.name}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        <p><i>Posted on { date.format("MMM D, YYYY") } ({ date.fromNow() }).</i></p>
                         <ReactMarkdown source={resource.desc} />
                         <i><ReactMarkdown source={resource.contact} /></i>
                     </Modal.Body>
