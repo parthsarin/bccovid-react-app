@@ -1,7 +1,7 @@
 {
-    "anyone": {
-        "name": "Anyone",
-        "icon": "account_circle"
+    "atRisk": {
+        "name": "High-Risk Populations",
+        "icon": "local_hospital"
     },
     "students": {
         "name": "Students",

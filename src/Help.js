@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
+import Spinner from 'react-bootstrap/Spinner';
 import ReactMarkdown from 'react-markdown';
 
 import firebase from 'firebase/app';
@@ -22,13 +23,12 @@ export default class Help extends React.Component {
 
         this.state = {
             resources: null,
-            filter: ['anyone']
+            filter: []
         }
     }
 
     componentDidMount() {
         var db = firebase.firestore();
-        this.getResources();
 
         db.collection("resources").onSnapshot(function (querySnapshot) {
             this.getResources();
@@ -73,11 +73,12 @@ export default class Help extends React.Component {
     }
 
     shouldShowResource(resource) {
-        return (this.state.filter.includes('anyone') 
+        return ((!this.state.filter || !this.state.filter.length) // no filters
                 || this.state.filter.includes(resource.category));
     }
 
     render() {
+        /* USER HANDLING */
         const user = this.props.user;
         const signInButton = user ? 
         (
@@ -108,6 +109,7 @@ export default class Help extends React.Component {
             </Card>
         );
 
+        /* FILTERS */
         var filterButtons = [];
         for (const category in helpCategories) {
             filterButtons.push(
@@ -121,14 +123,27 @@ export default class Help extends React.Component {
             );
         }
 
+        var filtersApplied = 
+        (this.state.filter && this.state.filter.length) ? 
+            this.state.filter.map(
+                (category) => helpCategories[category].name
+              ).join(', ')
+            : 'None';
+
+        /* RENDER */
         return (
             <div>
                 <Container className="help">
                     <h1>Get and Give Help</h1>
                     <p className="lead">Resources for the entire community.</p>
                     <p className="text-muted">Filter resources based on target group:</p>
-                    <Row noGutters={true} className="filter-resources mb-2">
+                    <Row noGutters={true} className="filter-resources">
                     { filterButtons }
+                    </Row>
+                    <Row noGutters={true} className="filter-applied">
+                        <Col>
+                            <p className="text-muted">Filters Applied: {filtersApplied}.</p>
+                        </Col>
                     </Row>
                     <Row noGutters={true} className="community-resource-cards justify-content-between">
                     {
@@ -140,7 +155,13 @@ export default class Help extends React.Component {
                                 key={resource.id} 
                                 resource={resource} 
                             /> : null
-                        ) : null
+                        ) : (
+                            <Col>
+                                <Card body className="text-center mb-2">
+                                    <Spinner animation="border" /> Loading... 
+                                </Card>
+                            </Col>
+                        )
                     }
                     </Row>
                     { signInButton }
@@ -167,7 +188,7 @@ function FilterButton(props) {
 
     return (
         <Button 
-            className="mr-2"
+            className="mr-2 mb-2"
             variant={variant} 
             onClick={targetFunc}
         >
