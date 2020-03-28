@@ -5,7 +5,6 @@ function DiseaseMap(props) {
     return (
     <>
         <Container> 
-            <h1 id="map" className="mt-4">COVID-19 Map</h1>
             <p className="lead">Made by Johns Hopkins University.</p>
         </Container>
         <iframe 

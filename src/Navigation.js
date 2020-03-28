@@ -78,15 +78,15 @@ export default class Navigation extends React.Component {
                 </ScrollNavLink>
                 <ScrollNavLink 
                   onClick={() => this.setState({ expanded: false })} 
-                  target="map"
-                >
-                  Map
-                </ScrollNavLink>
-                <ScrollNavLink 
-                  onClick={() => this.setState({ expanded: false })} 
                   target="sunshine"
                 >
                   Rays of Sunshine
+                </ScrollNavLink>
+                <ScrollNavLink 
+                  onClick={() => this.setState({ expanded: false })} 
+                  target="data"
+                >
+                  Data
                 </ScrollNavLink>
               </Nav>
             </Navbar.Collapse>

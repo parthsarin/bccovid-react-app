@@ -16,8 +16,8 @@ const sunshineItems = [
 
 function Sunshine(props) {
     return (
-        <Container>
-            <h1 id="sunshine" className="mt-4">Rays of Sunshine</h1>
+        <Container className="sunshine" id="sunshine">
+            <h1 className="mt-4">Rays of Sunshine</h1>
             <p className="lead">Brightness in this scary, often dark time.</p>
             <ListGroup variant="flush" className="sunshine-list mb-2">
                 {

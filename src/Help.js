@@ -16,6 +16,7 @@ import moment from 'moment';
 
 import helpCategories from './helpCategories.json';
 import HelpForm from './HelpForm';
+import LoadingCard from './LoadingCard';
 
 export default class Help extends React.Component {
     constructor(props) {
@@ -136,7 +137,6 @@ export default class Help extends React.Component {
                 <Container className="help">
                     <h1>Get and Give Help</h1>
                     <p className="lead">Resources for the entire community.</p>
-                    <p className="text-muted">Filter resources based on target group:</p>
                     <Row noGutters={true} className="filter-resources">
                     { filterButtons }
                     </Row>
@@ -156,11 +156,7 @@ export default class Help extends React.Component {
                                 resource={resource} 
                             /> : null
                         ) : (
-                            <Col>
-                                <Card body className="text-center mb-2">
-                                    <Spinner animation="border" /> Loading... 
-                                </Card>
-                            </Col>
+                            <Col><LoadingCard /></Col>
                         )
                     }
                     </Row>
